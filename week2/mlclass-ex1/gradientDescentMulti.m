@@ -17,15 +17,15 @@ for iter = 1:num_iters
     %       of the cost function (computeCostMulti) and gradient here.
     %
 
+    hypo = X * theta; % Get the hypothesis
 
+    delta = zeros(length(theta), 1); % Init the delta vector
 
+    for n = 1:length(theta)
+        delta(n, 1) = (1/m) * ((hypo - y)' * X(:,n));
+    end
 
-
-
-
-
-
-
+    theta = theta - alpha .* delta; % Vectorizing the calculation
 
     % ============================================================
 
