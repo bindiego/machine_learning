@@ -83,11 +83,23 @@ fprintf('Running gradient descent ...\n');
 
 % Choose some alpha value
 alpha = 0.01;
+alpha2 = 0.03;
+alpha3 = 0.1;
+alpha4 = 0.3;
+alpha5 = 1;
 num_iters = 400;
 
 % Init Theta and Run Gradient Descent 
 theta = zeros(3, 1);
+theta2 = zeros(3, 1);
+theta3 = zeros(3, 1);
+theta4 = zeros(3, 1);
+theta5 = zeros(3, 1);
 [theta, J_history] = gradientDescentMulti(X, y, theta, alpha, num_iters);
+[theta2, J_history2] = gradientDescentMulti(X, y, theta2, alpha2, num_iters);
+[theta3, J_history3] = gradientDescentMulti(X, y, theta3, alpha3, num_iters);
+[theta4, J_history4] = gradientDescentMulti(X, y, theta4, alpha4, num_iters);
+[theta5, J_history5] = gradientDescentMulti(X, y, theta5, alpha5, num_iters);
 
 % Plot the convergence graph
 figure;
@@ -95,9 +107,29 @@ plot(1:numel(J_history), J_history, '-b', 'LineWidth', 2);
 xlabel('Number of iterations');
 ylabel('Cost J');
 
+hold on; % keep previous plot visible
+plot(1:numel(J_history2), J_history2, '-r', 'LineWidth', 2);
+plot(1:numel(J_history3), J_history3, '-c', 'LineWidth', 2);
+plot(1:numel(J_history4), J_history4, '-g', 'LineWidth', 2);
+plot(1:numel(J_history5), J_history5, '-m', 'LineWidth', 2);
+hold off % don't overlay any more plots on this figure
+
 % Display gradient descent's result
-fprintf('Theta computed from gradient descent: \n');
+fprintf('Theta(Blue) alpha(%f) computed from gradient descent: \n', alpha);
 fprintf(' %f \n', theta);
+fprintf('\n');
+
+fprintf('Theta2(Red) alpha(%f) computed from gradient descent: \n', alpha2);
+fprintf(' %f \n', theta2);
+fprintf('\n');
+fprintf('Theta3(Cyan) alpha(%f) computed from gradient descent: \n', alpha3);
+fprintf(' %f \n', theta3);
+fprintf('\n');
+fprintf('Theta4(Green) alpha(%f) computed from gradient descent: \n', alpha4);
+fprintf(' %f \n', theta4);
+fprintf('\n');
+fprintf('Theta5(Magenta) alpha(%f) computed from gradient descent: \n', alpha5);
+fprintf(' %f \n', theta5);
 fprintf('\n');
 
 % Estimate the price of a 1650 sq-ft, 3 br house
@@ -105,7 +137,10 @@ fprintf('\n');
 % Recall that the first column of X is all-ones. Thus, it does
 % not need to be normalized.
 price = 0; % You should change this
-
+F = [1650 3];
+F = (F - mu) ./ sigma; % normalize the input features
+F = [ones(size(F, 1), 1), F]; % Add a column of ones to x
+price = F * theta3;
 
 % ============================================================
 
@@ -150,7 +185,9 @@ fprintf('\n');
 % Estimate the price of a 1650 sq-ft, 3 br house
 % ====================== YOUR CODE HERE ======================
 price = 0; % You should change this
-
+F = [1650 3];
+F = [ones(size(F, 1), 1), F]; % Add a column of ones to x
+price = F * theta;
 
 % ============================================================
 
