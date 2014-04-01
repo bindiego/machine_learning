@@ -20,12 +20,12 @@ grad = zeros(size(theta));
 % Note: grad should have the same dimensions as theta
 %
 
+hypo = sigmoid(X * theta); % hypothesis of all training data
 
+J = 1 ./ m * (-y' * log(hypo) - (1 - y') * log(1 - hypo));
+grad = 1 ./ m * X' * (hypo - y);
 
-
-
-
-
+% theta = theta - alpha / m * (X'*(hypo - y)); % gradient descent
 
 % =============================================================
 
