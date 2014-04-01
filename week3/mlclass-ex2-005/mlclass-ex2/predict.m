@@ -15,11 +15,13 @@ p = zeros(m, 1);
 %               You should set p to a vector of 0's and 1's
 %
 
+hypo = sigmoid(X * theta); % hypothesis of training data
 
+% idx_neg = hypo < 0.5;
+idx_pos = hypo >= 0.5;
 
-
-
-
+% p(idx_neg) = 0;
+p(idx_pos) = 1;
 
 % =========================================================================
 
