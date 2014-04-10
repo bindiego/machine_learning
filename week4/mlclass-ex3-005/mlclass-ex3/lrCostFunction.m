@@ -36,14 +36,21 @@ grad = zeros(size(theta));
 %           grad = grad + YOUR_CODE_HERE (using the temp variable)
 %
 
+hypo = sigmoid(X * theta); % hypothesis of all training data
 
+% Here do not regularize theta(0) which corresponds to theta(1) in Octave
+J = (1.0 / m) .* (-y' * log(hypo) - (1 - y') * log(1 - hypo)) + ...
+    (lambda / (2 * m)) * sum(theta(2:end).^2);
 
+% Use this mask to make sure theta(0) is NOT regularized
+mask = ones(size(theta));
 
+% this will set theta(0) to 0, so grad(0) will have lambda/m*theta(0) = 0
+mask(1) = 0;
 
+beta = hypo - y;
 
-
-
-
+grad = (1 / m) * X' * beta + (lambda / m) * (theta .* mask);
 
 % =============================================================
 
