@@ -62,23 +62,82 @@ Theta2_grad = zeros(size(Theta2));
 %               and Theta2_grad from Part 2.
 %
 
+% build y
+build_y = zeros(m, max(y));
+for i = 1:m
+    build_y(i, y(i,1)) = 1;
+end
 
+% forward prop
+tmp = [ones(m, 1) X];
+z2 = (tmp * Theta1');
+a2 = sigmoid(z2);
+tmp2 = [ones(m, 1) a2];
+z3 = (tmp2 * Theta2');
+a3 = sigmoid(z3);
+[~, h] = max(a3, [], 2);
 
+% compute the cost
+for i = 1:m
+    cost = (sum((build_y(i, :) .* log(a3(i, :)) + ...
+        (1 - build_y(i, :)) .* log(1 - a3(i, :)))));
+    J = J + cost;
+end
 
+J = (-(1 / m)) * J;
 
+% regularization
+thetas = 0;
+hidden_thetas = 0;
+reg = lambda / (2 * m);
 
+tmp_theta2 = Theta2(:, 2:size(Theta2, 2));
+for i = 1:size(Theta2, 1)
+    thetas = thetas + sum(tmp_theta2(i, :) .^ 2);
+end
 
+tmp_theta1 = Theta1(:, 2:size(Theta1, 2));
+for i = 1:size(Theta1, 1)
+    hidden_thetas = hidden_thetas + sum(tmp_theta1(i, :) .^ 2);
+end
 
+J = J + reg * (thetas + hidden_thetas);
 
+% back prop - assume 3 layers, 1 input, 1 hidden, 1 output
 
+% iterate through each training example
+for t = 1:m
+    % forward
 
+    a1 = X(t, :);
 
+    a1 = [1 a1]; % adding bias unit
+    z2 = a1 * Theta1';
+    a2 = sigmoid(z2);
 
+    a2 = [1 a2]; % adding bias unit
+    z3 = a2 * Theta2';
+    a3 = sigmoid(z3);
 
+    % output layer error
+    delta3 = (a3 - build_y(t, :));
 
+    % hidden layer error
+    delta2 = (delta3 * Theta2) .* [1 sigmoidGradient(z2)];
+    delta2 = delta2(2:end);
 
+    % calculate gradient
+    Theta2_grad = (Theta2_grad + (delta3' * a2));
+    Theta1_grad = (Theta1_grad + (delta2' * a1));
+end
 
+Theta1_grad = (1 / m) .* Theta1_grad;
+Theta2_grad = (1 / m) .* Theta2_grad;
 
+% gradient regularization - not for bias unit
+
+Theta1_grad(:, 2:end) = Theta1_grad(:, 2:end) + (lambda / m) * Theta1(:, 2:end);
+Theta2_grad(:, 2:end) = Theta2_grad(:, 2:end) + (lambda / m) * Theta2(:, 2:end);
 
 % -------------------------------------------------------------
 
