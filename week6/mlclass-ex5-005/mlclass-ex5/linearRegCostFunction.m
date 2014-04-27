@@ -19,17 +19,21 @@ grad = zeros(size(theta));
 %               You should set J to the cost and grad to the gradient.
 %
 
+% cost function
+hypo = X*theta; % hypothesis of all training data
 
 
+% Here do not regularize theta(0) which corresponds to theta(1) in Octave
+J = 1/(2*m) * ((hypo - y)' * (hypo - y)) + ...
+    (lambda / (2 * m)) * (theta' * theta - theta(1)^2);
 
+% Use this mask to make sure theta(0) is NOT regularized
+mask = ones(size(theta));
 
+% this will set theta(0) to 0, so grad(0) will have lambda/m*theta(0) = 0
+mask(1) = 0; 
 
-
-
-
-
-
-
+grad = (1 / m) * X' * (hypo - y) + (lambda / m) * (theta .* mask);
 % =========================================================================
 
 grad = grad(:);
