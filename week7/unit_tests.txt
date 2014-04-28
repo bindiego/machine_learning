@@ -1,0 +1,117 @@
+Assignment #1 [Gaussian Kernel]
+>> gaussianKernel(sin(1:5), cos(1:5), pi)
+ans =  0.78886
+Assignment #2 [dataset3Params]
+% With C & sigma vectors defined as below:
+% C_vect = [0.01; 1; 3];
+% sigma_vect = [0.01; 1; 3];
+
+% I have modified the function to return matrix 'error_master', which basically has 
+% the error corresponding to each combination of C and sigma...this can potentially help
+% with code debugging. Also, I have reduced the number of C-sigma combinations to 
+% reduce the execution time
+
+>> [C, sigma, error_master] = dataset3Params(X = [sin(1:1000)' cos(1:1000)'], y =  floor(abs(sin(1:1000) + 0.5))', Xval = [cos(1:1000)' sin(1:1000)'], yval = floor(abs(cos(1:1000) + 0.8))')
+
+C =  0.010000
+sigma =  1
+error_master =
+
+   0.010000   0.010000   0.564000
+   0.010000   1.000000   0.033000
+   0.010000   3.000000   0.052000
+   1.000000   0.010000   0.564000
+   1.000000   1.000000   0.053000
+   1.000000   3.000000   0.046000
+   3.000000   0.010000   0.564000
+   3.000000   1.000000   0.054000
+   3.000000   3.000000   0.047000
+
+Assignment #3 [processEmail]
+>> word_indices = processEmail("Machine learning is the science of getting computers to act without being explicitly programmed. In the past decade, machine learning has given us self-driving cars, practical speech recognition, effective web search, and a vastly improved understanding of the human genome. Machine learning is so pervasive today that you probably use it dozens of times a day without knowing it. Many researchers also think it is the best way to make progress towards human-level AI.")
+
+==== Processed Email ====
+
+machin learn is the scienc of get comput to act without be explicitli program
+in the past decad machin learn ha given us self drive car practic speech
+recognit effect web search and a vastli improv understand of the human genom
+machin learn is so pervas todai that you probabl us it dozen of time a dai
+without know it mani research also think it is the best wai to make progress
+toward human level ai
+
+=========================
+word_indices =
+
+    988
+    938
+    877
+   1666
+   1457
+   1162
+    708
+    330
+   1699
+     17
+   1862
+    162
+   1319
+    825
+   1666
+   1221
+    411
+    988
+    938
+    743
+    713
+   1766
+   1474
+    491
+    245
+   1286
+   1569
+    522
+   1822
+   1462
+     74
+    824
+   1746
+   1162
+   1666
+    801
+    988
+    938
+    877
+   1538
+   1700
+   1665
+   1893
+   1308
+   1766
+    883
+   1162
+   1694
+    393
+   1862
+    916
+    883
+   1002
+   1407
+     60
+   1678
+    883
+    877
+   1666
+    176
+   1804
+   1699
+    997
+   1321
+   1715
+    801
+    949
+
+Assignment #4 [emailFeatures]
+% NOTE: in this unit test case, the vector word_indices is the one returned by unit test for assignment #3 (above)
+
+>> sum(emailFeatures(word_indices))
+ans =  50
