@@ -1,0 +1,46 @@
+To get the ball rolling:
+
+1.3.3 vectorized logistic regression
+[c g] = lrCostFunction([0.6 0.3 0.2]',[1.1 0.1 1;1.5 1.3 2],[1 1]',2)
+c =  0.32170
+g =
+  -0.27694
+   0.18419
+  -0.10133
+
+If you get stuck, we can post more. Don't want to rob you of the learning experience though.
+
+Note: The parameters for a unit test are purely mechanical and have nothing to to with the assignment, deliberately.
+---------------------------------------
+Update (T. Mosher) - adding more validated test cases to this post so they stay pinned to the top of the thread ----
+---------------------------------------
+Non-regularized version of lrCostFunction() (per section 1.3.2)
+(set lambda to zero in the above test)
+results:
+c = 0.25670
+g = 
+  -0.27694
+  -0.11581
+  -0.30133
+--------------------------------------
+another Regularized lrCostFunction() (with both y values set to zero)
+theta = [0.6 ; 0.3 ; 0.2]
+X = [1.1 0.1 1.0 ; 1.5 1.3 2.0];
+y = [0 ; 0]
+[c g] = lrCostFunction(theta, X, y, 0.1)
+c = 1.5499
+g = 
+  1.02306
+  0.59919
+  1.20867
+-----------------------------------
+[Update: added 2014-04-09]
+Here is a simple unit test for predictOneVsAll();
+all_theta = [-0.7 0.5 -0.3 0.3;-0.7 -0.3 0.5 0.3;-0.7 -0.3 -0.3 -0.5];
+X = [1 0 0;0 1 0;0 0 -1];
+p = predictOneVsAll(all_theta, X)
+p = 
+  1
+  2
+  3
+This test is pending until someone verifies it.
